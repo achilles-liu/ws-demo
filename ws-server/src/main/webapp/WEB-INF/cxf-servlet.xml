@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml"/>
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+    <jaxws:endpoint id="helloService" implementor="#helloImpl" address="/hello">
+    	<jaxws:inInterceptors>
+    		<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+    			<constructor-arg>
+    				<map>
+    					<entry key="action" value="UsernameToken" />
+    					<!-- *text password which isn't recommended to use* -->
+    					<entry key="passwordType" value="PasswordText" />
+    					<entry key="user" value="achilles" />
+    					<entry key="passwordCallbackRef">
+    						<ref bean="serverPwdCallback"/>
+    					</entry>
+    				</map>
+    			</constructor-arg>
+    		</bean>
+    	</jaxws:inInterceptors>
+    </jaxws:endpoint>
+</beans>
