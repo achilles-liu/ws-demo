@@ -40,5 +40,21 @@
 	    <groupId>org.apache.cxf</groupId>
 	    <artifactId>cxf-rt-ws-security</artifactId>
 	</dependency>
+	<dependency>
+	    <groupId>asm</groupId>
+	    <artifactId>asm</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>antlr</groupId>
+	    <artifactId>antlr</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.codehaus.groovy</groupId>
+	    <artifactId>groovy</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi-ooxml</artifactId>
+	</dependency>
   </dependencies>
 </project>

@@ -19,6 +19,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.version>4.2.0.RELEASE</spring.version>
     <cxf.version>3.1.5</cxf.version>
+    <asm.version>3.3.1</asm.version>
+    <antlr.version>2.7.7</antlr.version>
+    <groovy.version>2.4.5</groovy.version>
+    <poi.version>3.13</poi.version>
   </properties>
   
   <dependencyManagement>
@@ -34,6 +38,26 @@
 		    <artifactId>servlet-api</artifactId>
 		    <version>2.5</version>
 		    <scope>provided</scope>
+		</dependency>
+		<dependency>
+		    <groupId>asm</groupId>
+		    <artifactId>asm</artifactId>
+		    <version>${asm.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>antlr</groupId>
+		    <artifactId>antlr</artifactId>
+		    <version>${antlr.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.codehaus.groovy</groupId>
+		    <artifactId>groovy</artifactId>
+		    <version>${groovy.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>${poi.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework</groupId>

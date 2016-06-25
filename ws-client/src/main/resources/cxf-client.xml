@@ -4,11 +4,13 @@
     xmlns:p="http://www.springframework.org/schema/p"
     xmlns:jaxws="http://cxf.apache.org/jaxws"
     xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:lang="http://www.springframework.org/schema/lang"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd">
     <context:property-placeholder location="classpath:info.properties"/>
     <bean id="info" class="org.ws.common.Info" p:port="${client.service.port}" p:host="${client.service.host}">
     	<property name="username" value="${common.service.username}" />
@@ -17,6 +19,21 @@
     <bean id="clientPwdCallback" class="org.ws.client.security.ClientPasswordCallback">
     	<constructor-arg ref="info" />
     </bean>
+    
+    <lang:groovy id="calculator" script-source="classpath:org/ws/scripting/groovy/calculator.groovy" />
+    <lang:groovy id="txtFileParser" script-source="classpath:org/ws/scripting/groovy/TextFileParser.groovy" />
+    <lang:groovy id="excelFileParser" script-source="classpath:org/ws/scripting/groovy/ExcelFileParser.groovy" />
+    
+    <bean id="fileProcessor" class="org.ws.client.file.FileProcessor">
+    	<property name="path" value="src/main/resources/text.txt" />
+    	<property name="fileEval" ref="txtFileParser" />
+    </bean>
+    
+    <bean id="excelProcessor" class="org.ws.client.file.FileProcessor">
+    	<property name="path" value="src/main/resources/students.xlsx" />
+    	<property name="fileEval" ref="excelFileParser" />
+    </bean>
+    
     <jaxws:client id="helloClient" serviceClass="org.ws.api.IHello" address="http://${client.service.host}:#{info.port}/ws-server/hello">
     	<jaxws:outInterceptors>
     		<bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
