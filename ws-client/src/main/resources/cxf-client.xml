@@ -34,21 +34,22 @@
     	<property name="fileEval" ref="excelFileParser" />
     </bean>
     
+    <bean id="wss4jBean" class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+		<constructor-arg>
+			<map>
+				<entry key="action" value="UsernameToken" />
+				<!-- *text password which isn't recommended to use* -->
+				<entry key="passwordType" value="PasswordText" />
+				<entry key="user" value="achilles" />
+				<entry key="passwordCallbackRef">
+					<ref bean="clientPwdCallback"/>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
     <jaxws:client id="helloClient" serviceClass="org.ws.api.IHello" address="http://${client.service.host}:#{info.port}/ws-server/hello">
     	<jaxws:outInterceptors>
-    		<bean class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
-    			<constructor-arg>
-    				<map>
-    					<entry key="action" value="UsernameToken" />
-    					<!-- *text password which isn't recommended to use* -->
-    					<entry key="passwordType" value="PasswordText" />
-    					<entry key="user" value="achilles" />
-    					<entry key="passwordCallbackRef">
-    						<ref bean="clientPwdCallback"/>
-    					</entry>
-    				</map>
-    			</constructor-arg>
-    		</bean>
+    		<ref bean="wss4jBean"/>
     	</jaxws:outInterceptors>
     </jaxws:client>
 </beans>

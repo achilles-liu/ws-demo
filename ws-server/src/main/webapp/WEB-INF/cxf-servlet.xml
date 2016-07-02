@@ -7,21 +7,24 @@
         http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 	<import resource="classpath:META-INF/cxf/cxf.xml"/>
 	<import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+	
+	<bean id="wss4jBean" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+		<constructor-arg>
+			<map>
+				<entry key="action" value="UsernameToken" />
+				<!-- *text password which isn't recommended to use* -->
+				<entry key="passwordType" value="PasswordText" />
+				<entry key="user" value="achilles" />
+				<entry key="passwordCallbackRef">
+					<ref bean="serverPwdCallback"/>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+	
     <jaxws:endpoint id="helloService" implementor="#helloImpl" address="/hello">
     	<jaxws:inInterceptors>
-    		<bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
-    			<constructor-arg>
-    				<map>
-    					<entry key="action" value="UsernameToken" />
-    					<!-- *text password which isn't recommended to use* -->
-    					<entry key="passwordType" value="PasswordText" />
-    					<entry key="user" value="achilles" />
-    					<entry key="passwordCallbackRef">
-    						<ref bean="serverPwdCallback"/>
-    					</entry>
-    				</map>
-    			</constructor-arg>
-    		</bean>
+    		<ref bean="wss4jBean"/>
     	</jaxws:inInterceptors>
     </jaxws:endpoint>
 </beans>

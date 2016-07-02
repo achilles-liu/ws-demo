@@ -52,6 +52,6 @@
 	</dependency>
   </dependencies>
   <build>
-    <finalName>ws-web</finalName>
+    <finalName>ws-server</finalName>
   </build>
 </project>

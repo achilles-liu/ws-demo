@@ -26,6 +26,5 @@ public class App
     	
     	FileProcessor excelfp = (FileProcessor) cxt.getBean("excelProcessor");
     	excelfp.process();
-    	
     }
 }
