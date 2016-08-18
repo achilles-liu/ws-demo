@@ -55,6 +55,27 @@ public class Test {
 		m6.put("pid", 2);
 		m6.put("name", "node22");
 		m6.put("alias", "alias22");
+		
+		Map<String,Object> m7 = new HashMap<String,Object>();
+		m7.put("id", 7);
+		m7.put("pid", 3);
+		m7.put("name", "node111");
+		m7.put("alias", "alias111");
+		Map<String,Object> m8 = new HashMap<String,Object>();
+		m8.put("id", 8);
+		m8.put("pid", 3);
+		m8.put("name", "node112");
+		m8.put("alias", "alias112");
+		
+		Map<String,Object> m9 = new HashMap<String,Object>();
+		m9.put("id", 9);
+		m9.put("pid", 7);
+		m9.put("name", "node1111");
+		m9.put("alias", "alias1111");
+		
+		datas.add(m8);
+		datas.add(m9);
+		datas.add(m7);
 		datas.add(m4);
 		datas.add(m2);
 		datas.add(m3);
@@ -63,9 +84,12 @@ public class Test {
 		datas.add(m1);
 		datas.add(m0);
 		
+		datas2.add(m7);
 		datas2.add(m4);
 		datas2.add(m2);
+		datas2.add(m8);
 		datas2.add(m3);
+		datas2.add(m9);
 		datas2.add(m6);
 		datas2.add(m5);
 		datas2.add(m1);
@@ -108,7 +132,7 @@ public class Test {
 				un.setAlias(String.valueOf(item.get("alias")));
 				return un;
 			}});
-		TTree<UserNode> tree2 = new TTree<UserNode>(datas2,new Factory<UserNode>(){
+		/*TTree<UserNode> tree2 = new TTree<UserNode>(datas2,new Factory<UserNode>(){
 			public UserNode create(Map<String, Object> item) {
 				UserNode un = new UserNode();
 				un.setId(Integer.valueOf(String.valueOf(item.get("id"))));
@@ -116,13 +140,13 @@ public class Test {
 				un.setName(String.valueOf(item.get("name")));
 				un.setAlias(String.valueOf(item.get("alias")));
 				return un;
-			}},false,new UserNode(0,-1,"root2","root2"));
+			}},false,new UserNode(0,-1,"root2","root2"));*/
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(mapper.writeValueAsString(tree));
-		System.out.println(mapper.writeValueAsString(tree.getRoot()));
+		//System.out.println(mapper.writeValueAsString(tree.getRoot()));
 		
-		System.out.println(mapper.writeValueAsString(tree2));
-		System.out.println(mapper.writeValueAsString(tree2.getRoot()));
+		//System.out.println(mapper.writeValueAsString(tree2));
+		//System.out.println(mapper.writeValueAsString(tree2.getRoot()));
 	}
 
 }

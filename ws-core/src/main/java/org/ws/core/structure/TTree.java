@@ -1,6 +1,7 @@
 package org.ws.core.structure;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,8 +66,9 @@ public class TTree<T extends Node>{
 	 */
 	private void assemble(List<Map<String, Object>> data){
 		
-		if(this.hasRootData){
+		if(this.hasRootData && this.root==null){
 			Map<String,Object> rd = findRoot(data);
+			
 			if(rd == null) throw new IllegalArgumentException("illegal argument: [ hasRootData ]");
 			this.root = factory.create(rd);
 		}else{
@@ -74,20 +76,29 @@ public class TTree<T extends Node>{
 		}
 		
 		T tnode = null;
+		List<Map<String,Object>> orphan = null;
 		for(Map<String, Object> item:data){
 			tnode = factory.create(item);
 			int pid = tnode.getPid();
-			if(pid == -1 && root == null) {
-				root = tnode;
+			if(pid == -1) {
 				continue;
 			}
 			T parent = findParentByPid(root,pid);
 			if(parent != null){
 				parent.getChildren().add(tnode);
+			}else{
+				if(orphan == null){
+					orphan = new ArrayList<Map<String,Object>>();
+				}
+				orphan.add(item);
 			}
 		}
+		
+		if(orphan != null){
+			assemble(orphan);
+		}
 	}
-
+	
 	/**
 	 * check whether or not the data of root is existing in the inputed collections.
 	 * if existing, the data will be used to create a new root node.
@@ -177,7 +188,7 @@ public class TTree<T extends Node>{
 	 * @author Achilles Liu
 	 *
 	 */
-	public static class Node{
+	public static class Node implements Comparator<Node>{
 		/**
 		 * id
 		 */
@@ -217,6 +228,10 @@ public class TTree<T extends Node>{
 		
 		public void setChildren(List<Node> children) {
 			this.children = children;
+		}
+
+		public int compare(Node o1, Node o2) {
+			return o1.getId()-o2.getId();
 		}
 	}
 }
